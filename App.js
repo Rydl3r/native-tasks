@@ -1,21 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { store } from './store'
+import { Provider } from 'react-redux'
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import TodosScreen from './screens/TodosScreen';
+import AddTodoScreen from './screens/AddTodoScreen';
 
 export default function App() {
+  const Stack = createNativeStackNavigator();
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <NavigationContainer>
+      <SafeAreaProvider>
+      <Stack.Navigator>
+        <Stack.Screen options={{ title: 'Your Todos' }} name="Todos" component={TodosScreen} />
+        <Stack.Screen options={{ title: 'Add Todo' }} name="AddTodo" component={AddTodoScreen} />
+      </Stack.Navigator>
+      </SafeAreaProvider>
+      </NavigationContainer>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
